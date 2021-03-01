@@ -1,0 +1,17 @@
+[DEFAUlT]
+
+Temperature = 10
+Particle Density = 20
+probeCenterX = 0
+probeCenterY = 4.1
+Number of CPUs = 4
+time steps = 1000000
+
+Constriction Width = 0.6
+Scattering Probability = 0
+Source Drain Ratio = 1.2
+save interval = 100
+dome diameter = 10
+injector height and width = 1,5
+
+base output path = ./

@@ -1,0 +1,11 @@
+[DEFAULT]
+
+Scattering Probability = 0
+Minimum Energy = 0.9
+Source Drain Ratio = 1.2
+Number of Particles = 700
+time steps = 1000001
+save interval = 1000
+geometry filename = Jag_rectangle_4x20um.npz
+Number of CPUs = 2
+base output path = ./

@@ -1,0 +1,14 @@
+[DEFAULT]
+
+Temperature = 4
+Particle Density = 25
+probeCenterX = .9
+probeCenterY = .9
+
+Scattering Probability = 0
+Source Drain Ratio = 1.2
+time steps = 10000
+save interval = 100
+injector height and width = 1,5
+Number of CPUs = 28
+base output path = ./
