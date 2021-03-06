@@ -529,7 +529,7 @@ class driftDiffusionSimulatorBase:
 		self.Xpos[partIdx] = xNew+0*vXNew*self.DeltaX*.0001
 		self.Ypos[partIdx] = yNew+0*vYNew*self.DeltaX*.0001
 	
-	def saveState(self,fname):
+	def saveState(self,fname, fnameREDUCED):
 		#saves all object data into an npz file
 		varNames = self.__dict__.keys()
 		
@@ -538,11 +538,21 @@ class driftDiffusionSimulatorBase:
 			saveFunction = saveFunction+name+' = self.'+name+', '
 			
 		saveFunction = saveFunction[:-2] + ')'
+        
+		redcuedVarNames = [self.Erho, self.Px, self.Py, self.Nabsorbed, self.Ninjected,
+						self.histX, self.histY, self.borderX, self.borderY, self.edgeStyle]
+        
+		reducedSaveFunction = "np.savez(fnameREDUCED, "
+		for name in varNames:
+			reducedSaveFunction = reducedSaveFunction+name+' = self.'+name+', '
+			
+		reducedSaveFunction = reducedSaveFunction[:-2] + ')'
 		
 		exec(saveFunction)
+		exec(reducedSaveFunction)
 		
 		
-	def runAndSave(self,Nsteps,dNsave,fname):
+	def runAndSave(self,Nsteps,dNsave,fname,fnameREDUCED):
 		
 		t0 = time.time()
 		for i in range(Nsteps):
@@ -557,5 +567,5 @@ class driftDiffusionSimulatorBase:
 				t0 = t1
 			
 				#tSave0 = time.time()
-				self.saveState(fname)
+				self.saveState(fname, fnameREDUCED)
 				#print('time save:', time.time()-tSave0)

@@ -36,4 +36,5 @@ do
 	echo "injector height and width = 1,5" >> $file
 	echo "" >> $file
 	echo "base output path = ./" >> $file
+	echo "initCondFile = dome_T${T}_Probe${x},${y}" >> $file
 done
