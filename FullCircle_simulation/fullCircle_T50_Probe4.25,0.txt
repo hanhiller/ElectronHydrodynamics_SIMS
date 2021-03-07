@@ -1,0 +1,18 @@
+[DEFAULT]
+
+Temperature = 50
+Particle Density = 25
+probeCenterX = 4.25
+probeCenterY = 0
+Number of CPUs = 1
+time steps = 200
+
+Constriction Width = 0.3
+Scattering Probability = 0
+Source Drain Ratio = 1.2
+save interval = 10000
+diameter = 10
+injector height and width = 1.5,0.6
+
+base output path = ./SIM_data/
+inital conditions = fullCircle_T50_Probe4.25,0

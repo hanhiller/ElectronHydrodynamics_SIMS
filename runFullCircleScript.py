@@ -39,7 +39,7 @@ def main():
 	probeCenterY = config['DEFAULT'].getfloat('probeCenterY', 0)
 
 	Ncpu = config['DEFAULT'].getint('Number of CPUs', 1)
-	outPath = config['DEFAULT'].get('base output path', './')
+	outPath = config['DEFAULT'].get('base output path', './SIM_data/')
 	
 	diffusiveEdges = config['DEFAULT'].getboolean('diffusive edges?',False)
 	
@@ -95,12 +95,14 @@ def main():
 			dSim.vY[i+int(dSim.Npart/2)] = -np.sin(thetas)
 		
 		if initCondFile:
-			mat = np.load(outPath+initCondFile+'/'+initCondFile+("_%03d"%iterationNum)+".npz")
-			dSim.Xpos = mat['Xpos']
-			dSim.Ypos = mat['Ypos']
-			dSim.vX = mat['vX']
-			dSim.vY = mat['vY']
-			dSim.pR = mat['pR']
+			if os.path.isfile(outPath+initCondFile+'/'+initCondFile+("_%03d"%iterationNum)+".npz"):
+				mat = np.load(outPath+initCondFile+'/'+initCondFile+("_%03d"%iterationNum)+".npz")
+				dSim.Xpos = mat['Xpos']
+				dSim.Ypos = mat['Ypos']
+				dSim.vX = mat['vX']
+				dSim.vY = mat['vY']
+				dSim.pR = mat['pR']
+				print("loaded initial conditions file")
 			
 		#tic = time.time()
 		dSims.append(dSim)

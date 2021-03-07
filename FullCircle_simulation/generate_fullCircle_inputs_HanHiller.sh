@@ -35,6 +35,6 @@ do
 	echo "diameter = 10" >> $file
 	echo "injector height and width = 1.5,0.6" >> $file
 	echo "" >> $file
-	echo "base output path = ./" >> $file
-    	echo "initCondFile = fullCircle_T${T}_Probe${x},${y}" >> $file
+	echo "base output path = ./SIM_data/" >> $file
+    	echo "inital conditions = fullCircle_T${T}_Probe${x},${y}" >> $file
 done
