@@ -53,11 +53,11 @@ def main():
 	elif len(splitName) == 4:
 		fnameBase = '.'.join([initFile .split('.')[0], initFile .split('.')[1], initFile .split('.')[2]])
 	
-	fnameBaseREDUCED = fnameBase+'_REDUCED'
+	# fnameBaseREDUCED = fnameBase+'_REDUCED'
     
 	if not os.path.isdir(outPath+fnameBase):
 		os.mkdir(outPath+fnameBase)
-		os.mkdir(outPath+fnameBaseREDUCED)
+		# os.mkdir(outPath+fnameBaseREDUCED)
 	
 	print("Simulation temperature:", Temp)
 
@@ -110,9 +110,9 @@ def main():
 	jobs=[]
 	for iterationNum,dSim in enumerate(dSims):
 		fnameOut = outPath+fnameBase+"/"+fnameBase+("_%03d"%iterationNum)+".npz"
-		fnameOutREDUCED = outPath+fnameBaseREDUCED+"/"+fnameBaseREDUCED+("_%03d"%iterationNum)+".npz"
+		# fnameOutREDUCED = outPath+fnameBaseREDUCED+"/"+fnameBaseREDUCED+("_%03d"%iterationNum)+".npz"
 	
-		p = multiprocessing.Process(target=dSim.runAndSave, args=(Nsteps,dNsave,fnameOut,fnameOutREDUCED))
+		p = multiprocessing.Process(target=dSim.runAndSave, args=(Nsteps,dNsave,fnameOut)#,fnameOutREDUCED))
 		jobs.append(p)
 		p.start()
 	p.join()

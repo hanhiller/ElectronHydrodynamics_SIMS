@@ -38,7 +38,7 @@ def main():
 	geometryIn = config['DEFAULT'].get('geometry filename','')
 
 	Ncpu = config['DEFAULT'].getint('Number of CPUs', 1)
-	outPath = config['DEFAULT'].get('base output path', './')
+	outPath = config['DEFAULT'].get('base output path', './SIM_data/')
 	
 	initCondFile = config['DEFAULT'].get('inital conditions','')
 	
@@ -50,11 +50,13 @@ def main():
 	elif len(splitName) == 4:
 		fnameBase = '.'.join([initFile .split('.')[0], initFile .split('.')[1], initFile .split('.')[2]])
 	
-	fnameBaseREDUCED = fnameBase+'_REDUCED'
+	# fnameBaseREDUCED = fnameBase+'_REDUCED'
     
 	if not os.path.isdir(outPath+fnameBase):
 		os.mkdir(outPath+fnameBase)
-		os.mkdir(outPath+fnameBaseREDUCED)
+		# os.mkdir(outPath+fnameBaseREDUCED)
+
+	print("Simulation temperature:", Temp)
 	
 	dSims = []
 	for iterationNum in range(Ncpu):
@@ -97,12 +99,13 @@ def main():
 			dSim.vY[i+int(dSim.Npart/2)] = -np.sin(thetas)
 		
 		if initCondFile:
-			mat = np.load(outPath+initCondFile+'/'+initCondFile+("_%03d"%iterationNum)+".npz")
-			dSim.Xpos = mat['Xpos']
-			dSim.Ypos = mat['Ypos']
-			dSim.vX = mat['vX']
-			dSim.vY = mat['vY']
-			dSim.pR = mat['pR']
+			if os.path.isfile(outPath+initCondFile+'/'+initCondFile+("_%03d"%iterationNum)+".npz"):
+				mat = np.load(outPath+initCondFile+'/'+initCondFile+("_%03d"%iterationNum)+".npz")
+				dSim.Xpos = mat['Xpos']
+				dSim.Ypos = mat['Ypos']
+				dSim.vX = mat['vX']
+				dSim.vY = mat['vY']
+				dSim.pR = mat['pR']
 			
 		#tic = time.time()
 		dSims.append(dSim)
@@ -110,9 +113,9 @@ def main():
 	jobs=[]
 	for iterationNum,dSim in enumerate(dSims):
 		fnameOut = outPath+fnameBase+"/"+fnameBase+("_%03d"%iterationNum)+".npz"
-		fnameOutREDUCED = outPath+fnameBaseREDUCED+"/"+fnameBaseREDUCED+("_%03d"%iterationNum)+".npz"
+		# fnameOutREDUCED = outPath+fnameBaseREDUCED+"/"+fnameBaseREDUCED+("_%03d"%iterationNum)+".npz"
 	
-		p = multiprocessing.Process(target=dSim.runAndSave, args=(Nsteps,dNsave,fnameOut,fnameOutREDUCED))
+		p = multiprocessing.Process(target=dSim.runAndSave, args=(Nsteps,dNsave,fnameOut),#fnameOutREDUCED))
 		jobs.append(p)
 		p.start()
 	p.join()

@@ -529,43 +529,39 @@ class driftDiffusionSimulatorBase:
 		self.Xpos[partIdx] = xNew+0*vXNew*self.DeltaX*.0001
 		self.Ypos[partIdx] = yNew+0*vYNew*self.DeltaX*.0001
 	
-	def saveState(self,fname, fnameREDUCED):
+	def saveState(self,fname):#, fnameREDUCED):
 		#saves all object data into an npz file
-		varNames = self.__dict__.keys()
+		varNames = list(self.__dict__.keys())
+		varNames.remove('i_lookup')
+		varNames.remove('j_lookup')
+		varNames.remove('overlaps')
 		
 		saveFunction = "np.savez(fname, "
 		for name in varNames:
 			saveFunction = saveFunction+name+' = self.'+name+', '
 			
 		saveFunction = saveFunction[:-2] + ')'
-        
-		redcuedVarNames = [self.Erho, self.Px, self.Py, self.Nabsorbed, self.Ninjected,
-						self.histX, self.histY, self.borderX, self.borderY, self.edgeStyle]
-        
-		reducedSaveFunction = "np.savez(fnameREDUCED, "
-		for name in varNames:
-			reducedSaveFunction = reducedSaveFunction+name+' = self.'+name+', '
-			
-		reducedSaveFunction = reducedSaveFunction[:-2] + ')'
-		
 		exec(saveFunction)
-		exec(reducedSaveFunction)
+        
+		# redcuedVarNames = [self.Erho, self.Px, self.Py, self.Nabsorbed, self.Ninjected,
+						# self.histX, self.histY, self.borderX, self.borderY, self.edgeStyle]
+		# reducedSaveFunction = "np.savez(fnameREDUCED, "
+		# for name in reducedVarNames:
+			# reducedSaveFunction = reducedSaveFunction+name+' = self.'+name+', '
+		# reducedSaveFunction = reducedSaveFunction[:-2] + ')'
+		# exec(reducedSaveFunction)
 		
 		
-	def runAndSave(self,Nsteps,dNsave,fname,fnameREDUCED):
+	def runAndSave(self,Nsteps,dNsave,fname):#,fnameREDUCED):
 		
 		t0 = time.time()
 		for i in range(Nsteps):
 			
-			#TimeStep0 = time.time()
 			self.timestep()
-			#print('time step:', time.time()-tTimeStep0)
 			
 			if i%dNsave == 0:
 				t1 = time.time()
 				print('%d:  %g'%(i,(t1-t0)))
 				t0 = t1
 			
-				#tSave0 = time.time()
-				self.saveState(fname, fnameREDUCED)
-				#print('time save:', time.time()-tSave0)
+				self.saveState(fname)#,fnameREDUCED)
