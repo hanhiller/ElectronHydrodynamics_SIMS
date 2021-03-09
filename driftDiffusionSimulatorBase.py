@@ -46,7 +46,7 @@ class driftDiffusionSimulatorBase:
 		self.setFieldResolution(.1)
 		
 		self.timeCount = 0
-		self.initializationCount = 100000
+		self.initializationCount = 100000000
 		
 	def updateBody(self):
 		#builds the border and defines the edge properties

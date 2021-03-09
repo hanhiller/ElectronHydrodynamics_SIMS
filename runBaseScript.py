@@ -101,11 +101,20 @@ def main():
 		if initCondFile:
 			if os.path.isfile(outPath+initCondFile+'/'+initCondFile+("_%03d"%iterationNum)+".npz"):
 				mat = np.load(outPath+initCondFile+'/'+initCondFile+("_%03d"%iterationNum)+".npz")
+				dSim.Nabsorbed = mat['Nabsorbed']
+				dSim.Ninjected = mat['Ninjected']
+				dSim.Px = mat['Px']
+				dSim.Py = mat['Py']
+				dSim.pR = mat['pR']
+				dSim.Erho = mat['Erho']
+				dSim.rho = mat['rho']
 				dSim.Xpos = mat['Xpos']
 				dSim.Ypos = mat['Ypos']
 				dSim.vX = mat['vX']
 				dSim.vY = mat['vY']
-				dSim.pR = mat['pR']
+				dSim.timeCount = mat['timeCount']
+            
+				print("loaded initial conditions file")
 			
 		#tic = time.time()
 		dSims.append(dSim)
@@ -115,7 +124,7 @@ def main():
 		fnameOut = outPath+fnameBase+"/"+fnameBase+("_%03d"%iterationNum)+".npz"
 		# fnameOutREDUCED = outPath+fnameBaseREDUCED+"/"+fnameBaseREDUCED+("_%03d"%iterationNum)+".npz"
 	
-		p = multiprocessing.Process(target=dSim.runAndSave, args=(Nsteps,dNsave,fnameOut),#fnameOutREDUCED))
+		p = multiprocessing.Process(target=dSim.runAndSave, args=(Nsteps,dNsave,fnameOut)),#fnameOutREDUCED))
 		jobs.append(p)
 		p.start()
 	p.join()

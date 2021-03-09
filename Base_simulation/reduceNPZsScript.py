@@ -9,6 +9,7 @@ def main():
     for SIMname in os.listdir('./SIM_data'): # finds directories
         if os.path.isdir('./SIM_data/'+SIMname):
             fnameBase= SIMname # directory name in SIM_data
+	    print(fnameBase)
 
             Nsims = 0 # counts Nsims
             path = './SIM_data/'+fnameBase+'/' # path to NPZs
@@ -22,7 +23,6 @@ def main():
                     
                     # and generates smaller (excludes 4 variables)
                     fname = path+fnameBase+'_%03d.npz'%i
-                    print(fname)
                     saveFunction = "np.savez(fname, "
                     for variable in mat:
                             if variable != 'borderPath' and variable != 'i_lookup' and variable != 'j_lookup' and variable != 'overlaps':
