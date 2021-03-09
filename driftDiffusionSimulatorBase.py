@@ -535,6 +535,7 @@ class driftDiffusionSimulatorBase:
 		varNames.remove('i_lookup')
 		varNames.remove('j_lookup')
 		varNames.remove('overlaps')
+		self.varNames = varNames
 		
 		saveFunction = "np.savez(fname, "
 		for name in varNames:
