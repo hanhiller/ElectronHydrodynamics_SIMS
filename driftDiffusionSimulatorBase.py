@@ -92,7 +92,7 @@ class driftDiffusionSimulatorBase:
 		r =-1#'rough'
 		f =-2#'false'
         
-		thetas = np.linspace(np.pi, 3*np.pi, 20)
+		thetas = np.linspace(np.pi, 3*np.pi, 100)
 		self.borderX = np.append( self.borderX, self.probeCenterX + np.cos(thetas)*self.probeTipDiameter/2)
 		self.borderX = np.append( self.borderX, self.borderX[0])
 		self.borderY = np.append( self.borderY, self.probeCenterY + np.sin(thetas)*self.probeTipDiameter/2)
